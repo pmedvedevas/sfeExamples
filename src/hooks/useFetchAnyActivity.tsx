@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 interface UseFetchActivity {
-  activity?: string;
+  activity: string | null;
   isLoading: boolean;
   isError: boolean;
 }
 
 const useFetchAnyActivity = (): UseFetchActivity => {
-  const [activity, setActivity] = useState<string>();
+  const [activity, setActivity] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -19,8 +19,9 @@ const useFetchAnyActivity = (): UseFetchActivity => {
     } catch {
       console.log('Error occurred while fetching the data');
       setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
